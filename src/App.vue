@@ -2,7 +2,7 @@
  * @Description: 
  * @Date: 2020-12-22 21:05:26 +0800
  * @Author: JackChou
- * @LastEditTime: 2021-01-12 21:43:43 +0800
+ * @LastEditTime: 2021-01-12 22:20:10 +0800
  * @LastEditors: JackChou
 -->
 <template>
@@ -11,7 +11,11 @@
   <!-- <WatchEffect /> -->
   <SetupOne :mark="mark"></SetupOne>
   <SetupTwo :mark="mark"></SetupTwo>
-  <TeleportVue />
+  <!-- <TeleportVue /> -->
+  <Suspense />
+  <ul>
+    <FragmentTest :data="[5, 3, 1, 6, 9, 4, 2, 8]" />
+  </ul>
   <a-button @click="onChangeMark">修改mark</a-button>
 </template>
 
