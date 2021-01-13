@@ -1,0 +1,28 @@
+<template>
+  <div>
+    <input v-bind="$attrs" />
+  </div>
+</template>
+<script>
+import { defineComponent, ref, reactive, watch, computed } from 'vue'
+export default defineComponent({
+  name: 'MyInput',
+  props: {
+    size: {
+      type: Number,
+    },
+  },
+  inheritAttrs: false,
+  setup(props, { emit, attrs, slots }) {
+    console.log('props')
+    console.log(props)
+    console.log('attrs')
+    console.log(attrs)
+    console.log('$attrs')
+    // console.log($attrs)
+    return {}
+  },
+})
+</script>
+<style scoped lang="scss">
+</style>

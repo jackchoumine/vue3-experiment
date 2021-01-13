@@ -2,7 +2,7 @@
  * @Description: 
  * @Date: 2020-12-22 21:05:26 +0800
  * @Author: JackChou
- * @LastEditTime: 2021-01-12 22:20:10 +0800
+ * @LastEditTime: 2021-01-13 20:30:22 +0800
  * @LastEditors: JackChou
 -->
 <template>
@@ -16,19 +16,54 @@
   <ul>
     <FragmentTest :data="[5, 3, 1, 6, 9, 4, 2, 8]" />
   </ul>
+
   <a-button @click="onChangeMark">修改mark</a-button>
+  <MyInput
+    :size="20"
+    :disabled="false"
+    v-model:value="inputValue"
+    @input="onInputValue"
+    class="test"
+    style="color: red"
+  />
+  <p>
+    输入的值
+    <span style="color: red">
+      {{ inputValue }}
+    </span>
+  </p>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onErrorCaptured } from 'vue'
+
+function useInput() {
+  const inputValue = ref('输入值')
+  const onInputValue = event => {
+    inputValue.value = event.target.value
+  }
+  return { onInputValue, inputValue }
+}
 export default {
   name: 'App',
   setup() {
     const mark = ref(100)
     function onChangeMark() {
+      console.log('点击事件触发')
       mark.value = 200 * Math.random()
     }
-    return { onChangeMark, mark }
+
+    onErrorCaptured((error, vm, info) => {
+      console.log('error')
+      console.log(error)
+      console.log('vm')
+      console.log(vm)
+      console.log('inofo')
+      console.log(info)
+      return false
+    })
+    const { inputValue, onInputValue } = useInput()
+    return { onChangeMark, mark, inputValue, onInputValue }
   },
 }
 </script>
