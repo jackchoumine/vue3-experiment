@@ -2,7 +2,7 @@
  * @Description: 注册全局组件
  * @Date: 2021-01-09 21:06:09 +0800
  * @Author: JackChou
- * @LastEditTime: 2021-01-14 16:55:09 +0800
+ * @LastEditTime: 2021-01-14 20:43:27 +0800
  * @LastEditors: JackChou
  */
 import WatchTest from './WatchTest.vue'
@@ -29,9 +29,16 @@ const components = [
   MyModelTwo,
   MyModel,
 ]
-export const registerComponents = app => {
-  components.forEach(component => {
-    app.component(component.name, component)
-  })
+// export const registerComponents = app => {
+//   components.forEach(component => {
+//     app.component(component.name, component)
+//   })
+// }
+export const registerComponents = {
+  install(app) {
+    components.forEach(component => {
+      app.component(component.name, component)
+    })
+  },
 }
 export default components
