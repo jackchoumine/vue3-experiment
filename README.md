@@ -332,3 +332,64 @@ inheritAttrs: false,
 没有声明的事件会包含在`$attrs` 对象中,默认绑定到组件根元素,`inheritAttrs: false,`可取消默认绑定行为.
 
 组件根元素不再监听父组件传入的事件,同时也不自动绑定其他原生的属性,比如 style.
+
+## v-model
+
+3.x 中,在原生的 DOM 上使用 v-model, 和 2.x 一样的.
+
+- text 和 textarea 元素使用 value property 和 input 事件；
+- checkbox 和 radio 使用 checked property 和 change 事件；
+- select 字段将 value 作为 prop 并将 change 作为事件。
+
+在自定义组件上使用`v-model`发生了变化.
+
+1. prop 和事件默认名称已更改, prop -→ modelValue event -→ update:modelValue, 且在使用时可指定 prop.
+
+2. 同一个组件可使用多个`v-model`.
+
+```html
+<ChildComponent v-model="pageTitle" />
+
+<!-- 是以下的简写: -->
+
+<ChildComponent :modelValue="pageTitle" @update:modelValue="pageTitle = $event" />
+```
+
+支持定义 prop 参数和使用多个`v-model`:
+
+```html
+<ChildComponent v-model:title="pageTitle" v-model:content="pageContent" />
+
+<!-- 是以下的简写： -->
+
+<ChildComponent
+  :title="pageTitle"
+  @update:title="pageTitle = $event"
+  :content="pageContent"
+  @update:content="pageContent = $event"
+/>
+```
+
+[详细用法](https://v3.cn.vuejs.org/guide/component-custom-events.html#v-model-%E5%8F%82%E6%95%B0)
+
+3.  移出`.sync`双向绑定语法,2.x 中该语法是,`update:propName`的语法糖.
+
+```html
+<ChildComponent :title.sync="pageTitle" />
+
+<!-- 替换为 -->
+
+<ChildComponent v-model:title="pageTitle" />
+```
+
+4. 支持自定义修饰符.
+
+自定义修饰符:
+
+2.x 版本中提供了`.trim`|`.number`等内置的修饰符,可定义输入值进行处理,3.x 可自定义修饰符.
+
+修饰符是通过 prop `modelModifiers` 并在`update:propName` 事件发送数据之前,对数据进行更改实现的.
+
+对于带参数的 v-model 绑定，生成的 prop 名称将为 arg + "Modifiers".
+
+使用修饰符处理输入的金额,要求用户在输入数值时,转为千分位显示.

@@ -2,7 +2,7 @@
  * @Description: 
  * @Date: 2020-12-22 21:05:26 +0800
  * @Author: JackChou
- * @LastEditTime: 2021-01-14 15:23:34 +0800
+ * @LastEditTime: 2021-01-14 17:23:41 +0800
  * @LastEditors: JackChou
 -->
 <template>
@@ -34,6 +34,10 @@
   </p>
   <h2>自定义事件--- emits</h2>
   <MyButton @click="onClick" />
+  <h2>v-model</h2>
+  <MyModelTwo />
+  <MyModel v-model:amount.currency="amount" />
+  <p>输入的值{{ amount }}</p>
 </template>
 
 <script>
@@ -49,6 +53,7 @@ function useInput() {
 export default {
   name: 'App',
   setup() {
+    const amount = ref(100)
     const mark = ref(100)
     function onChangeMark() {
       console.log('点击事件触发')
@@ -73,7 +78,7 @@ export default {
         console.log(params)
       }
     }
-    return { onChangeMark, mark, inputValue, onInputValue, onClick }
+    return { amount, onChangeMark, mark, inputValue, onInputValue, onClick }
   },
 }
 </script>

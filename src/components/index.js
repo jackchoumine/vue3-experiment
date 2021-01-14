@@ -2,7 +2,7 @@
  * @Description: 注册全局组件
  * @Date: 2021-01-09 21:06:09 +0800
  * @Author: JackChou
- * @LastEditTime: 2021-01-14 14:08:36 +0800
+ * @LastEditTime: 2021-01-14 16:55:09 +0800
  * @LastEditors: JackChou
  */
 import WatchTest from './WatchTest.vue'
@@ -14,6 +14,8 @@ import SuspenseVue from './SuspenseVue.vue'
 import FragmentTest from './FragmentTest.vue'
 import MyInput from './MyInput.vue'
 import MyButton from './MyButton.vue'
+import MyModelTwo from './MyModelTwo.vue'
+import MyModel from './MyModel.vue'
 const components = [
   WatchTest,
   WatchEffect,
@@ -24,6 +26,8 @@ const components = [
   SetupTwo,
   MyInput,
   MyButton,
+  MyModelTwo,
+  MyModel,
 ]
 export const registerComponents = app => {
   components.forEach(component => {
