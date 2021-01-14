@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, reactive, watch, computed } from 'vue'
+import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'MyInput',
   props: {
@@ -19,8 +19,12 @@ export default defineComponent({
     console.log('attrs')
     console.log(attrs)
     console.log('$attrs')
-    // console.log($attrs)
+    // console.log($attrs) //NOTE 没定义就使用,报错 not defined
     return {}
+  },
+  mounted() {
+    console.log('this.$attrs')
+    console.log(this.$attrs)
   },
 })
 </script>

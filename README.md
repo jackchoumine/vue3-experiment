@@ -40,13 +40,13 @@ npm run build
 
 ```ts
 interface Data {
-	[key: string]: unknown
+  [key: string]: unknown
 }
 
 interface SetupContext {
-	attrs: Data
-	slots: Slots
-	emit: (event: string, ...args: unknown[]) => void
+  attrs: Data
+  slots: Slots
+  emit: (event: string, ...args: unknown[]) => void
 }
 
 function setup(props: Data, context: SetupContext): Data
@@ -76,30 +76,30 @@ props 初始化后立即调用，先于`beforeCreate`调用。
 
 ```html
 <template>
-	<div class="setup-one">
-		<h1>setup</h1>
-		<p>分数：{{ count }}</p>
-		<div>年纪：{{ age }}</div>
-		<a-button @click="onChangeAge">修改年纪</a-button>
-	</div>
+  <div class="setup-one">
+    <h1>setup</h1>
+    <p>分数：{{ count }}</p>
+    <div>年纪：{{ age }}</div>
+    <a-button @click="onChangeAge">修改年纪</a-button>
+  </div>
 </template>
 <script>
-	import { computed, defineComponent, ref } from 'vue'
-	export default defineComponent({
-		name: 'SetupOne',
-		props: {
-			mark: Number,
-		},
-		setup(props) {
-			const age = ref(0)
-			const count = computed(() => props.mark * 0.5)
-			function onChangeAge() {
-				console.log(this) //NOTE setup 中的this 是 undefined
-				age.value = Math.random() * 50 // ref 的数据使用 .value 访问
-			}
-			return { age, onChangeAge, count }
-		},
-	})
+  import { computed, defineComponent, ref } from 'vue'
+  export default defineComponent({
+    name: 'SetupOne',
+    props: {
+      mark: Number,
+    },
+    setup(props) {
+      const age = ref(0)
+      const count = computed(() => props.mark * 0.5)
+      function onChangeAge() {
+        console.log(this) //NOTE setup 中的this 是 undefined
+        age.value = Math.random() * 50 // ref 的数据使用 .value 访问
+      }
+      return { age, onChangeAge, count }
+    },
+  })
 </script>
 <style scoped lang="scss"></style>
 ```
@@ -108,17 +108,17 @@ props 初始化后立即调用，先于`beforeCreate`调用。
 
 ```html
 <script>
-	import { defineComponent, ref, h } from 'vue'
-	export default defineComponent({
-		name: 'SetupTwo',
-		props: {
-			mark: Number,
-		},
-		setup(props) {
-			const count = ref(0)
-			return () => h('div', [count.value, '--', h('span', [props.mark])])
-		},
-	})
+  import { defineComponent, ref, h } from 'vue'
+  export default defineComponent({
+    name: 'SetupTwo',
+    props: {
+      mark: Number,
+    },
+    setup(props) {
+      const count = ref(0)
+      return () => h('div', [count.value, '--', h('span', [props.mark])])
+    },
+  })
 </script>
 <style scoped lang="scss"></style>
 ```
@@ -132,24 +132,79 @@ vue3 中提供了 watch 函数，用于监听响应式数据。
 ```js
 import { defineComponent, ref, watch } from 'vue'
 export default defineComponent({
-	name: 'WatchTest',
-	setup(props, { emit, attrs, slots }) {
-		const count = ref(0)
-		const unWatch = watch(count, (value, oldValue) => {
-			if (value === 6) {
-				unWatch()
-				console.log(timer)
-				clearInterval(timer)
-			}
-			console.log(value, oldValue)
-		})
-		const timer = setInterval(() => {
-			count.value += 2
-			if (count.value === 10) {
-				unWatch()
-			}
-		}, 2000)
-		return { count }
-	},
+  name: 'WatchTest',
+  setup(props, { emit, attrs, slots }) {
+    const count = ref(0)
+    const unWatch = watch(count, (value, oldValue) => {
+      if (value === 6) {
+        unWatch()
+        console.log(timer)
+        clearInterval(timer)
+      }
+      console.log(value, oldValue)
+    })
+    const timer = setInterval(() => {
+      count.value += 2
+      if (count.value === 10) {
+        unWatch()
+      }
+    }, 2000)
+    return { count }
+  },
 })
+```
+
+## vue3 中的 $attrs $listeners
+
+> $attrs 包含传递给组件的`非props`,包括 style|class|事件监听器,会自动添加到组件的根元素.
+
+2.x 中的 $attrs 不包含 style|class|事件监听器.
+
+> 设置 `inheritAttrs: false,`后,可手动决定 `$attrs` 绑定到哪个元素上.
+
+> 在 setup 中拿不到 $attrs, attrs 和 $attrs 属性是一样的.
+
+```html
+<template>
+  <div>
+    <input v-bind="$attrs" />
+  </div>
+</template>
+<script>
+import { defineComponent, } from 'vue'
+export default defineComponent({
+  name: 'MyInput',
+  props: {
+    size: {
+      type: Number,
+    },
+  },
+  inheritAttrs: false,
+  setup(props, { emit, attrs, slots }) {
+    console.log('props')
+    console.log(props)
+    console.log('attrs')
+    console.log(attrs)
+    console.log('$attrs')
+    // console.log($attrs) //NOTE 没定义就使用,报错 not defined
+    return {}
+  },
+  mounted() {
+    console.log('this.$attrs')
+    console.log(this.$attrs)
+  },
+})
+```
+
+> 3.x 中不再有 $listeners,而是在 `$attrs` 中, 以`on`前缀的属性是事件处理器.
+
+```html
+<MyInput
+  :size="20"
+  :disabled="false"
+  v-model:value="inputValue"
+  @input="onInputValue"
+  class="test"
+  style="color: red"
+/>
 ```
