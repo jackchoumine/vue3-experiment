@@ -208,3 +208,127 @@ export default defineComponent({
   style="color: red"
 />
 ```
+
+## 自定义事件 --- emits
+
+3.x 提供了`emits`选项,用于声明组件的自定义事件,和 props 类似.
+
+数组语法:
+
+```js
+emits: ['check'],//元素为自定义事件名
+```
+
+对象语法:
+
+```js
+emits: {
+  // eventName: ƒ
+  check: params => {
+    // 检查自定义事件抛出的数据是否满足要求
+    return ['check params'].includes(params)
+  }
+}
+```
+
+```html
+<template>
+  <div class="my-button">
+    <button class="button" @click="onClick" style="margin: 0 50px; padding: 35px 0">button</button>
+  </div>
+</template>
+<script>
+  import { defineComponent } from 'vue'
+  export default defineComponent({
+    name: 'MyButton',
+    setup(props, { emit, attrs, slots }) {
+      const onClick = event => {
+        console.log('原生事件')
+        emit('click', "I'm emit")
+      }
+      return { onClick }
+    },
+    mounted() {
+      console.log('MyButton----$attrs')
+      console.log(this.$attrs)
+    },
+  })
+</script>
+<style scoped>
+  .my-button {
+    background-color: bisque;
+  }
+  .button {
+    background-color: lightsalmon;
+  }
+</style>
+```
+
+使用 MyButton 组件:
+
+```html
+<template>
+ <MyButton @click="onClick" />
+</template>
+<script>
+import { onErrorCaptured } from 'vue'
+export default {
+  name: 'App',
+  setup() {
+    const onClick = params => {
+      console.log('自定义事件抛出的数据:')
+      console.log(params)
+    }
+    return { onClick }
+  }
+}
+```
+
+`.native` 事件修饰符已经移出,点击按钮,`MyButton` 上的事件处理器执行两次:
+
+1. `emit` 触发执行;
+2. 按钮上的点击事件冒泡到组件根元素,触发根元素上的监听器执行.
+
+> margin 不属于元素,点击 button 的 margin 不会触发自定义事件.
+
+如何防止两次执行?
+
+1. 声明自定义事件:
+
+```js
+  emits: {
+    // eventName:ƒ
+    click: params => {
+      if (typeof params === 'string') {
+        console.log('验证自定义事件抛出的数据')
+        return true
+      } else {
+        return false
+      }
+    },
+  },
+```
+
+> 声明自定义的事件,可读性好,不会破坏继承属性的挂载,同时能对自定义事件抛出的数据进行校验.
+
+2. 在原生事件中停滞事件冒泡
+
+```js
+const onClick = event => {
+  console.log('原生事件')
+  emit('click', "I'm emit")
+  event.stopPropagation()
+}
+```
+
+该方案在点击根元素时,仍然会触发根元素上的事件处理器. 如果不想点击根元素执行事件处理器时,不适合.
+
+3. 防止继承属性绑定到组件根元素---从组件根元素移除事件监听
+
+```js
+inheritAttrs: false,
+```
+
+没有声明的事件会包含在`$attrs` 对象中,默认绑定到组件根元素,`inheritAttrs: false,`可取消默认绑定行为.
+
+组件根元素不再监听父组件传入的事件,同时也不自动绑定其他原生的属性,比如 style.

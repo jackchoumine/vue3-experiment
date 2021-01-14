@@ -2,7 +2,7 @@
  * @Description: 
  * @Date: 2020-12-22 21:05:26 +0800
  * @Author: JackChou
- * @LastEditTime: 2021-01-14 11:37:57 +0800
+ * @LastEditTime: 2021-01-14 15:23:34 +0800
  * @LastEditors: JackChou
 -->
 <template>
@@ -32,6 +32,8 @@
       {{ inputValue }}
     </span>
   </p>
+  <h2>自定义事件--- emits</h2>
+  <MyButton @click="onClick" />
 </template>
 
 <script>
@@ -63,7 +65,15 @@ export default {
       return false
     })
     const { inputValue, onInputValue } = useInput()
-    return { onChangeMark, mark, inputValue, onInputValue }
+    const onClick = params => {
+      if (params.target && 'DIV' === params.target.tagName) {
+        console.log('根元素触发的事件')
+      } else {
+        console.log('自定义事件抛出的数据:')
+        console.log(params)
+      }
+    }
+    return { onChangeMark, mark, inputValue, onInputValue, onClick }
   },
 }
 </script>
