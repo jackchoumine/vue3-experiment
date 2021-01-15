@@ -2,13 +2,13 @@
  * @Description: 
  * @Date: 2020-12-22 21:05:26 +0800
  * @Author: JackChou
- * @LastEditTime: 2021-01-14 17:23:41 +0800
+ * @LastEditTime: 2021-01-15 09:45:29 +0800
  * @LastEditors: JackChou
 -->
 <template>
   <h1>vue3 学习</h1>
   <!-- <WatchTest /> -->
-  <!-- <WatchEffect /> -->
+  <WatchEffect />
   <SetupOne :mark="mark"></SetupOne>
   <SetupTwo :mark="mark"></SetupTwo>
   <!-- <TeleportVue /> -->
