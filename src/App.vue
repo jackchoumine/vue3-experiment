@@ -2,7 +2,7 @@
  * @Description: 
  * @Date: 2020-12-22 21:05:26 +0800
  * @Author: JackChou
- * @LastEditTime: 2021-01-15 09:45:29 +0800
+ * @LastEditTime: 2021-01-22 19:53:15 +0800
  * @LastEditors: JackChou
 -->
 <template>
@@ -19,12 +19,12 @@
 
   <a-button @click="onChangeMark">修改mark</a-button>
   <MyInput
+    v-model:value="inputValue"
     :size="20"
     :disabled="false"
-    v-model:value="inputValue"
-    @input="onInputValue"
     class="test"
     style="color: red"
+    @input="onInputValue"
   />
   <p>
     输入的值
