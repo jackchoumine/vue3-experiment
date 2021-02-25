@@ -7,6 +7,7 @@
 -->
 <template>
   <h1>vue3 学习</h1>
+  <SearchCom />
   <WatchTest />
   <WatchEffect />
   <SetupOne :mark="mark"></SetupOne>

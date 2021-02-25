@@ -16,6 +16,7 @@ import MyInput from './MyInput.vue'
 import MyButton from './MyButton.vue'
 import MyModelTwo from './MyModelTwo.vue'
 import MyModel from './MyModel.vue'
+import SearchCom from './search/index.vue'
 const components = [
   WatchTest,
   WatchEffect,
@@ -28,6 +29,7 @@ const components = [
   MyButton,
   MyModelTwo,
   MyModel,
+  SearchCom,
 ]
 // export const registerComponents = app => {
 //   components.forEach(component => {
