@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^2.0.0-rc.5",
+    "element-plus": "^1.0.2-beta.32",
     "moment": "^2.29.1",
     "vue": "^3.0.5"
   },
@@ -14,10 +15,11 @@
     "@babel/eslint-parser": "^7.12.1",
     "@vue/compiler-sfc": "^3.0.0-rc.9",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-import": "^1.13.3",
     "css-loader": "^4.2.2",
     "eslint": "^7.18.0",
     "eslint-plugin-vue": "^7.0.0-beta.4",
-    "file-loader": "^6.0.0",
+    "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^0.11.0",
     "url-loader": "^4.0.0",
     "vue-loader": "^16.0.0-beta.5",

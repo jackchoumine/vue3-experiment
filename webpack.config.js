@@ -25,6 +25,16 @@ module.exports = (env = {}) => {
           use: 'vue-loader',
         },
         {
+          test: /\.css$/,
+          use: [
+            // {
+            //   loader: MiniCssExtractPlugin.loader,
+            //   options: { hmr: !env.prod },
+            // },
+            'css-loader',
+          ],
+        },
+        {
           test: /\.png$/,
           use: {
             loader: 'url-loader',
@@ -32,14 +42,8 @@ module.exports = (env = {}) => {
           },
         },
         {
-          test: /\.css$/,
-          use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: { hmr: !env.prod },
-            },
-            'css-loader',
-          ],
+          test: /\.(woff|woff2|eot|otf|ttf)$/,
+          use: 'file-loader',
         },
       ],
     },
