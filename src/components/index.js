@@ -17,6 +17,7 @@ import MyButton from './MyButton.vue'
 import MyModelTwo from './MyModelTwo.vue'
 import MyModel from './MyModel.vue'
 import SearchCom from './search/index.vue'
+import Tree from './tree/Tree.vue'
 const components = [
   WatchTest,
   WatchEffect,
@@ -30,6 +31,7 @@ const components = [
   MyModelTwo,
   MyModel,
   SearchCom,
+  Tree,
 ]
 // export const registerComponents = app => {
 //   components.forEach(component => {

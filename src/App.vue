@@ -7,6 +7,8 @@
 -->
 <template>
   <h1>vue3 学习</h1>
+  <Tree />
+  <hr />
   <SearchCom />
   <WatchTest />
   <WatchEffect />
