@@ -7,14 +7,14 @@
 -->
 <template>
   <h1>vue3 学习</h1>
-  <!-- <WatchTest /> -->
+  <WatchTest />
   <WatchEffect />
   <SetupOne :mark="mark"></SetupOne>
   <SetupTwo :mark="mark"></SetupTwo>
   <!-- <TeleportVue /> -->
   <Suspense />
   <ul>
-    <FragmentTest :data="[5, 3, 1, 6, 9, 4, 2, 8]" />
+    <!-- <FragmentTest :data="[5, 3, 1, 6, 9, 4, 2, 8]" /> -->
   </ul>
 
   <a-button @click="onChangeMark">修改mark</a-button>
